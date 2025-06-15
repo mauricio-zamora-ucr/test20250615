@@ -1,0 +1,29 @@
+# pyproject.toml
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "test20250615"  # ⚠️ ¡IMPORTANTE! Debe ser un nombre único en PyPI.
+version = "1.0.0"
+authors = [
+  { name="Mauricio Zamora Hernandez", email="mauricio.zamorahernandez.ucr@gmail.com" },
+]
+description = "Un paquete de ejemplo que muestra una GUI simple."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    # Aquí irían las dependencias, ej: "requests>=2.20.0"
+    # Tkinter es parte de la librería estándar, no necesita ser listado.
+]
+
+# ---- ¡AQUÍ ESTÁ LA MAGIA! ----
+# Esta sección crea el comando de consola.
+[project.scripts]
+mi-app = "test20250615.main:iniciar_app"
