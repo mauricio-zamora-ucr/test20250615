@@ -1,0 +1,42 @@
+# .github/workflows/publicar-en-pypi.yml
+
+name: Publicar Paquete de Python en PyPI
+
+# ---- Disparador (Trigger) ----
+# Este workflow se ejecutará solo cuando crees una nueva "Release" en GitHub.
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      # Permiso fundamental para la publicación segura sin contraseña
+      id-token: write
+    steps:
+    # 1. Descarga tu código del repositorio
+    - name: Checkout del código
+      uses: actions/checkout@v4
+
+    # 2. Configura el entorno de Python
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    # 3. Instala las dependencias para construir el paquete
+    - name: Instalar dependencias de construcción
+      run: python -m pip install build
+
+    # 4. Construye el paquete
+    #    Este comando lee `pyproject.toml` y crea los archivos de distribución
+    #    en una nueva carpeta llamada `dist/`
+    - name: Construir el paquete
+      run: python -m build
+
+    # 5. Publica el paquete en PyPI
+    #    Esta es una acción oficial y segura que no necesita usuario/contraseña.
+    #    Usa el token que guardaste en los secretos de GitHub.
+    - name: Publicar en PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
